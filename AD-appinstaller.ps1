@@ -8,8 +8,8 @@ catch {
 
     $assets = (Invoke-WebRequest -Uri "https://api.github.com/repos/microsoft/winget-cli/releases/latest").Content | ConvertFrom-Json | Select-Object -ExpandProperty "assets"
 
-    $assets | Where-Object "browser_download_url" -Match '.msixbundle' | Select-Object -ExpandProperty "browser_download_url" | Invoke-WebRequest -Uri $_ -OutFile "Winget.msixbundle" -UseBasicParsing
-    $assets | Where-Object "browser_download_url" -Match 'License\d.xml' | Select-Object -ExpandProperty "browser_download_url" | Invoke-WebRequest -Uri $_ -OutFile "Winget_License.xml" -UseBasicParsing
+    $uri = $assets | Where-Object "browser_download_url" -Match '.msixbundle' | Select-Object -ExpandProperty "browser_download_url"; Invoke-WebRequest -Uri $uri -OutFile "Winget.msixbundle" -UseBasicParsing
+    $uri = $assets | Where-Object "browser_download_url" -Match 'License\d.xml' | Select-Object -ExpandProperty "browser_download_url"; Invoke-WebRequest -Uri $uri -OutFile "Winget_License.xml" -UseBasicParsing
 
     Add-AppxProvisionedPackage -Online -PackagePath .\Winget.msixbundle -LicensePath .\Winget_License.xml
 }
