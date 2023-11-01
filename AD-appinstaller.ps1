@@ -19,5 +19,5 @@ catch {
     Add-AppxProvisionedPackage -Online -PackagePath .\Winget.msixbundle -LicensePath .\Winget_License.xml; Remove-Item -Path .\Winget.msixbundle; Remove-Item -Path .\Winget_License.xml
 }
 
-$installed = [String]::Join("",(Winget List))
+$installed = [String]::Join("",(Winget List --accept-source-agreements --accept-package-agreements))
 $apps | ForEach-Object {if (!$installed.contains($_)) {winget install -e --silent --accept-source-agreements --accept-package-agreements --id $_}}  
