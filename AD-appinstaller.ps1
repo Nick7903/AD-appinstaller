@@ -4,7 +4,7 @@ $apps = @(
 )
 
 $ProgressPreference = "SilentlyContinue"
-Set-Location -Path $ENV:USERPROFILE
+Set-Location -Path $env:USERPROFILE
 
 try {Winget | Out-Null}
 catch {
@@ -17,6 +17,8 @@ catch {
     $uri = $assets | Where-Object "browser_download_url" -Match 'License1.xml' | Select-Object -ExpandProperty "browser_download_url"; Invoke-WebRequest -Uri $uri -OutFile "Winget_License.xml" -UseBasicParsing
 
     Add-AppxProvisionedPackage -Online -PackagePath .\Winget.msixbundle -LicensePath .\Winget_License.xml; Remove-Item -Path .\Winget.msixbundle; Remove-Item -Path .\Winget_License.xml
+
+    $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User") 
 }
 
 $installed = [String]::Join("",(Winget List --accept-source-agreements --accept-package-agreements))
