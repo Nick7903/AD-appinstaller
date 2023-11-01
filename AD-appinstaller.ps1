@@ -20,4 +20,4 @@ catch {
 }
 
 $installed = [String]::Join("",(Winget List --accept-source-agreements --accept-package-agreements))
-$apps | ForEach-Object {if (!$installed.contains($_)) {winget install -e --silent --accept-source-agreements --accept-package-agreements --id $_}}  
+$apps | ForEach-Object {if (!$installed.contains($_)) {Winget Install -e --silent --accept-source-agreements --accept-package-agreements --id $_}}  
