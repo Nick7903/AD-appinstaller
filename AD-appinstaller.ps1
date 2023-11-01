@@ -1,3 +1,4 @@
+$ProgressPreference = "SilentlyContinue"
 
 Set-Location -Path $ENV:USERPROFILE
 
